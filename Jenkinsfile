@@ -53,6 +53,12 @@ pipeline {
                 )
             }
         }
+        stage('SmokeTest'){
+         when {
+                branch 'master'
+         }
+        
+        }
         stage('DeployToProduction') {
             when {
                 branch 'master'
@@ -61,7 +67,6 @@ pipeline {
                 CANARY_REPLICAS = 0
             }
             steps {
-                input 'Deploy to Production?'
                 milestone(1)
                 kubernetesDeploy(
                     kubeconfigId: 'kubeconfig',
